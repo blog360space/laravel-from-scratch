@@ -14,4 +14,7 @@
 */
 Route::get('/','PostController@index');
 
-Route::get('/post/{post}','PostController@show');
+Route::get('/post/create','PostController@create');
+
+Route::get('/post/{post?}','PostController@show');
+
