@@ -16,7 +16,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('post.index');
+        $posts = Post::all();
+        
+        return view('post.index', [
+            'posts' => $posts
+        ]);
     }
 
     /**
@@ -37,6 +41,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(request(), [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        
         Post::create(request(['title', 'body']));   
         
         return redirect('/');
@@ -48,9 +57,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        return view('post.show');
+        return view('post.show', [
+            'post' => $post
+        ]);
     }
 
     /**
