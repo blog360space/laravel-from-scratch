@@ -22,16 +22,11 @@ class PostController extends Controller
      */
     public function index()
     {      
-        $posts = Post::archives();
+        $posts = Post::orderBy('created_at', 'desc')
+                ->filter(request(['year', 'month']))
+                ->get();
         
-        $archives = Post::selectRaw(
-                    'YEAR(created_at) AS `year`, 
-                    MONTHNAME(created_at) AS `month`,
-                    COUNT(id) AS published')
-                ->groupBy('year', 'month')
-                ->orderByRaw('min(created_at) desc')
-                ->get()
-                ->toArray();        
+        $archives = Post::archives();     
 
         return view('post.index', [ 
             'posts' => $posts,

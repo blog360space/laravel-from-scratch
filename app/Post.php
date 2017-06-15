@@ -47,8 +47,13 @@ class Post extends Model
     
     public static function archives()
     {
-        return static::orderBy('created_at', 'desc')
-                ->filter(request(['year', 'month']))
-                ->get();
+        return static::selectRaw(
+                    'YEAR(created_at) AS `year`, 
+                    MONTHNAME(created_at) AS `month`,
+                    COUNT(id) AS published')
+                ->groupBy('year', 'month')
+                ->orderByRaw('min(created_at) desc')
+                ->get()
+                ->toArray();   
     }
 }
