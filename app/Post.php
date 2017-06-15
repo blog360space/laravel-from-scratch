@@ -44,4 +44,11 @@ class Post extends Model
         
         return $query;
     }
+    
+    public static function archives()
+    {
+        return static::orderBy('created_at', 'desc')
+                ->filter(request(['year', 'month']))
+                ->get();
+    }
 }

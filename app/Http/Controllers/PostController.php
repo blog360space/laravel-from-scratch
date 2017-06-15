@@ -22,9 +22,7 @@ class PostController extends Controller
      */
     public function index()
     {      
-        $posts = Post::orderBy('created_at', 'desc')
-                ->filter(request(['year', 'month']))
-                ->get();
+        $posts = Post::archives();
         
         $archives = Post::selectRaw(
                     'YEAR(created_at) AS `year`, 
