@@ -16,7 +16,9 @@
        </ul>
    </div>
    
-   {{-- show comment --}}    
+   {{-- show comment --}}
+   @if (Auth::check())
    @include('layout.create-comment')
+   @endif
 </div>
 @endsection

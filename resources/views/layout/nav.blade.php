@@ -25,6 +25,11 @@
                 <li>
                     <a href="contact.html">Contact</a>
                 </li>
+                @if(Auth::check())
+                <li>
+                    <a href="#">{{ Auth::user()->name }}</a>
+                </li>
+                @endif
             </ul>
         </div>
         <!-- /.navbar-collapse -->

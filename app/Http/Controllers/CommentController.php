@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth');
+    }
+
     public function store(Request $request, Post $post)
     {
         $this->validate(request(), [
@@ -14,7 +19,7 @@ class CommentController extends Controller
         ]);
         $body = request('body');
         
-        $post->addComment($body);
+        $post->addComment($body, auth()->user()->id);
         
         return back();
     }

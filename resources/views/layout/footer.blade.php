@@ -3,6 +3,19 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="archive">
+                    <h2>Archive</h2>
+                    <ul class="list-group">
+                        @foreach($archives as $item)
+                        <li class="list-group-item"><a href="/?month={{ $item['month'] }}&year={{ $item['year'] }}">
+                                {{ $item['month'] . ' ' . $item['year'] }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
                     <li>
                         <a href="#">

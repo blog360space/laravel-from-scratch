@@ -12,10 +12,13 @@
 */
 Route::get('/','PostController@index');
 
-Route::get('/post/create','PostContro	ller@create');
+Route::get('/post/create','PostController@create');
 
 Route::post('/post/', 'PostController@store');
 
 Route::get('/post/{post?}','PostController@show');
 
 Route::post('post/{post}/comment','CommentController@store');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

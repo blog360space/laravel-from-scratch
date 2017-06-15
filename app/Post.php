@@ -2,11 +2,14 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
 class Post extends Model
 {
     protected $fillable = [
         'title',
-        'body'
+        'body',
+        'user_id'
     ];
     
     public function comments()
@@ -14,11 +17,31 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
     
-    public function addComment($body)
+    public function addComment($body, $userId)
     {        
         return Comment::create([
             'body' => $body,
-            'post_id' => $this->id
+            'post_id' => $this->id,
+            'user_id' => $userId
         ]);
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
+    
+    public function scopeFilter($query, $filters)
+    {
+        if  ($month = $filters['month']) {
+            $query->whereMonth('created_at', Carbon::parse($month)->month);
+        }
+        
+        if  ($year = $filters['year']) {
+            $query->whereYear('created_at', $year);
+        }
+        
+        return $query;
     }
 }

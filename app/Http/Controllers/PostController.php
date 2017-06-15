@@ -5,21 +5,39 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use function view;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
+    
+    public function __construct() 
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+    
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
     public function index()
-    {
-        $posts = Post::all();
+    {      
+        $posts = Post::orderBy('created_at', 'desc')
+                ->filter(request(['year', 'month']))
+                ->get();
         
+        $archives = Post::selectRaw(
+                    'YEAR(created_at) AS `year`, 
+                    MONTHNAME(created_at) AS `month`,
+                    COUNT(id) AS published')
+                ->groupBy('year', 'month')
+                ->orderByRaw('min(created_at) desc')
+                ->get()
+                ->toArray();        
+
         return view('post.index', [ 
-            'posts' => $posts
+            'posts' => $posts,
+            'archives' => $archives
         ]);
     }
 
@@ -43,10 +61,12 @@ class PostController extends Controller
     {
         $this->validate(request(), [
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',            
         ]);
         
-        Post::create(request(['title', 'body']));   
+        $data = request(['title', 'body']);
+        $data['user_id'] = auth()->user()->id;
+        Post::create($data);
         
         return redirect('/');
     }
