@@ -30,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        
+        app()->singleton(\App\Stripe::class, function () {
+            return new \App\Stripe('Hello Hung');
+        });
+
     }
 }

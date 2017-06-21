@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Welcome;
 use Illuminate\Http\Request;
+use App\User;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -24,5 +27,12 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+    
+    public function mail()
+    {
+        $user = User::first();
+        
+        Mail::to('hunggau@example.com')->send(new Welcome($user));
     }
 }
