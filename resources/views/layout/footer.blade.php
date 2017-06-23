@@ -16,6 +16,19 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="tags">
+                    <h2>Tags</h2>
+                    <ul class="list-group">
+                        @foreach($tags as $item)
+                        <li class="list-group-item"><a href="/post/tag/{{ $item->name }}">
+                                {{ $item->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
                     <li>
                         <a href="#">

@@ -25,15 +25,9 @@ class PostController extends Controller
         $posts = Post::orderBy('created_at', 'desc')
                 ->filter(request(['year', 'month']))
                 ->get();
-        $a;
-        $b;
-        $c = $a + $b;
-        $archives = Post::archives();     
-
-        return view('post.index', [ 
-            'posts' => $posts,
-            'archives' => $archives,
-            'tmp' => $hello
+        
+        return view('post.index', [
+            'posts' => $posts,            
         ]);
     }
 
@@ -70,7 +64,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return Response
      */
     public function show(Post $post)

@@ -21,6 +21,8 @@
 
 Route::get('/','PostController@index');
 
+Route::get('/post/tag/{tag}', 'TagController@index');
+
 Route::get('/post/create','PostController@create');
 
 Route::post('/post/', 'PostController@store');

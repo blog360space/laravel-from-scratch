@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Post;
+use App\Stripe;
+use App\Tag;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         
         view()->composer('layout.footer', function($view) {
             $view->with('archives', Post::archives());
+            $view->with('tags', Tag::has('posts')->select(['name'])->get());
         });
     }
 
@@ -31,8 +34,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         
-        app()->singleton(\App\Stripe::class, function () {
-            return new \App\Stripe('Hello Hung');
+        app()->singleton(Stripe::class, function () {
+            return new Stripe('Hello Hung');
         });
 
     }
