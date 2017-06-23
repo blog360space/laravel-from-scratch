@@ -12,5 +12,6 @@ and open the template in the editor.
     </head>
     <body>
         <h1>Welcome {{ $user->name }}</h1>
+        
     </body>
 </html>

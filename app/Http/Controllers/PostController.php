@@ -25,12 +25,15 @@ class PostController extends Controller
         $posts = Post::orderBy('created_at', 'desc')
                 ->filter(request(['year', 'month']))
                 ->get();
-        
+        $a;
+        $b;
+        $c = $a + $b;
         $archives = Post::archives();     
 
         return view('post.index', [ 
             'posts' => $posts,
-            'archives' => $archives
+            'archives' => $archives,
+            'tmp' => $hello
         ]);
     }
 
